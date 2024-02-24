@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+        integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+
+<div class="smallPageContainer">
+    <div class="centered-box">
+        <h1>Have a pleasant day</h1>
+        <p>Even though you didn't want to help out by accepting to submit the form. You are still much appreciated, friend!.</p>
+        <button class="pure-button pure-button-primary back-button" onclick="goBack()"><-- Back</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.location.href = "{{ url_for('homepage') }}";
+    }
+</script>
+
+</body>
+</html>

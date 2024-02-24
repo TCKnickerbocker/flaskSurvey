@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>A Home</title>
+    <link rel="stylesheet" href="./static/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+        integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+</head>
+
+<body>
+    <div>
+        <h1>Welcome!</h1>
+        <p>This is a survey about your superpower preferences. If you choose to participate, your response will be
+            collected, and I hope that you will answer honestly. Thanks!</p>
+        <br>
+        <button type="button" class="pure-button pure-button-primary " id="declineSurvey">Decline</button>
+        <button type="button" class="pure-button pure-button-primary" id="acceptSurvey">Consent</button>
+    
+    </div>
+
+    <script>
+        document.getElementById("declineSurvey").addEventListener("click", function () {
+            window.location.href = "{{ url_for('declineSurvey') }}";
+        });
+        document.getElementById("acceptSurvey").addEventListener("click", function () {
+            window.location.href = "{{ url_for('survey') }}";
+        });
+    </script>
+
+</body>
+
+</html>

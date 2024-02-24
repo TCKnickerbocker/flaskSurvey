@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+        integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="panel left-panel">
+            <div>
+                <canvas class="chartArea" id="primarySuperpowerChart"></canvas>
+            </div>
+            <div>
+                <canvas class="chartArea" id="secondarySuperpowerChart"></canvas>
+            </div>
+            <div>
+                <canvas class="chartArea" id="submissionDateChart"></canvas>
+            </div>
+        </div>
+        <div class="panel right-panel">
+            <div>
+                User-entered text answers:
+                <ul id="textAnswers">
+                
+                </ul>
+            </div>
+            <button type="button" class="pure-button pure-button-primary" id="backToHome">Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Vars
+        let submissionDates = {};
+        let primaryCount = {};
+        let secondaryCount = {};
+        let textAnswers = document.getElementById('textAnswers');
+        function getResults() {
+            fetch('/api/results')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('No search results for playlist from server');
+                    }
+                    return res.json(); // Read the response body as JSON
+                })
+                .then(data => {
+                    // Iterate through the data and count unique entries
+                    data.forEach(item => {
+                        console.log(item)
+                        if (submissionDates[item[5]]) {
+                            submissionDates[item[5]]++;
+                            console.log("Item had a date");
+                        } else {
+                            submissionDates[item[5]] = 1;
+                        }
+                        if (primaryCount[item[2]]) {
+                            primaryCount[item[2]]++;
+                        } else {
+                            primaryCount[item[2]] = 1;
+                        }
+                        if (secondaryCount[item[3]]) {
+                            secondaryCount[item[3]]++;
+                        } else {
+                            secondaryCount[item[3]] = 1;
+                        }
+
+                        // Add user's text responses to right-hand panel of page as list items
+                        let textRes = document.createElement("li");
+                        textRes.innerText = item[1];  // User's main textbox answer
+                        textAnswers.appendChild(textRes);
+                        if (item[4] != null) {
+                            let textRes = document.createElement("li");
+                            textRes.innerText = "^Corresponding Costume: "
+                            textRes.innerText += item[4];  // Submitter's main textbox answer
+                            textAnswers.appendChild(textRes);
+                            console.log("textRes.innerText:", textRes.innerText);
+                        }
+                        console.log("textRes:", textRes);
+                    });
+                    populateCharts(primaryCount, 'Primary Superpower Counts', 'primarySuperpowerChart');
+                    populateCharts(secondaryCount, 'Secondary Superpower Counts', 'secondarySuperpowerChart');
+                    populateCharts(submissionDates, 'Survey Submission Date Counts', 'submissionDateChart', true);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        // Creates a chart given input data, chart label, and html element to put chart into
+        function populateCharts(dict, label, elementName, date = false) {
+            // Unpack dictionaries into arrays
+            let keys = [];
+            let vals = [];
+            let extractDate = /([\w]+ [\w]+ [\w]+)/;
+            for (let key in dict) {
+                if (date) {
+                    dateStr = key.match(extractDate)[0];
+                    keys.push(dateStr);
+                }
+                else {
+                    keys.push(key);
+                }
+                vals.push(dict[key]);
+            }
+            chart = document.getElementById(elementName);
+            new Chart(chart, {
+                type: 'bar',
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: label,
+                        data: vals,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.3)', // Blue
+                            'rgba(255, 99, 132, 0.3)', // Red
+                            'rgba(255, 206, 86, 0.3)', // Yellow
+                            'rgba(75, 192, 192, 0.3)', // Green
+                            'rgba(153, 102, 255, 0.3)', // Purple
+                            'rgba(255, 159, 64, 0.3)' // Orange
+                        ],
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                        }
+                    }]
+                }
+            });
+        }
+
+        window.onload = getResults();
+        // Routing for Home button
+        document.getElementById("backToHome").addEventListener("click", function () {
+            window.location.href = "{{ url_for('homepage') }}";
+        });
+    </script>
+
+</body>
+
+</html>

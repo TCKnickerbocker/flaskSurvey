@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+        integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <h1>Thank You</h1>
+    <p>Now go live it up - the world loves you.</p>
+
+    <button class="pure-button pure-button-primary" id="retakeSurvey">Retake Survey</button>
+    <button class="pure-button pure-button-primary" id="viewResults">View Results</button>
+
+    <script>
+        // Routing for buttons
+        let retakeButton = document.getElementById("retakeSurvey");
+        retakeButton.addEventListener("click", function () {
+            window.location.href = "{{ url_for('homepage') }}"
+        })
+        let viewResultsButton = document.getElementById("viewResults");
+        viewResultsButton.addEventListener("click", function () {
+            window.location.href = "{{ url_for('viewResults') }}"
+        })
+    </script>
+
+</body>
+
+</html>

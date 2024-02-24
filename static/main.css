@@ -1,0 +1,106 @@
+#costumeKindLabel, #costumeKind {
+    display: none;
+}
+.spacerDiv{
+    width: 1em;
+}
+form{
+    margin-left: 2.5em;
+}
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+#acceptSurvey {
+    background: rgb(28, 184, 65);
+}
+
+.button-error {
+    background: rgb(202, 60, 60);
+}
+
+.button-warning {
+    background: rgb(223, 117, 20);
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221);
+}
+
+#declineSurvey{
+    background-color: rgb(190, 55, 55);
+}
+.superpower-radio{
+    justify-content: center;
+}
+#costumeCheck{
+    margin-left: 0.35em;
+}
+#viewResults{
+    background-color: green;
+}
+
+.chartArea{
+    width: 1em;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.panel {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.left-panel {
+    background-color: #e2e2e2; 
+}
+
+.right-panel {
+    background-color: #d0d0d0;
+}
+
+.centered{
+    align-items: center;
+}
+
+
+
+.smallPageContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.centered-box {
+    background-color: purple;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.back-button {
+    position: relative;
+    bottom: 10px;
+    left: 10px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
